@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet"  href="index.css"  />
+    <title>Monster Slayer</title>
+</head>
+<body>
+
+    
+    <!-- ------------------------------------------------------------------------------------------- -->
+    <header><h1>MONSTER SLAYER</h1></header>
+    <div id="app">
+        <section class="container" id="monster">
+            <h2>Monster's Health</h2>
+            <div class="healthbar" >
+                <div class="healthbar__value_monster"  :style="{width:monsterHealth+'%'}">{{monsterHealth}}</div>
+            </div>
+        </section>
+        <section class="container" id="player">
+            <h2>Player's Health</h2>
+            <div class="healthbar" >
+                <div class="healthbar__value"  :style="{width:playerHealth+'%'}">{{playerHealth}}</div>
+            </div>
+        </section>
+            
+            
+        
+        <div id="controls" v-if="gameRunning">
+            <button @click="attackMonster" >Attack Monster</button>
+            <button v-if="specialAttackStatus" style="background-color: rgb(103, 116, 32);" @click="specialAttack">Special Attack</button>
+            <button v-if="healStatus" style="background-color: green;" @click="heal">Heal</button>
+            <button @click="giveUp" style="background-color: rgb(192, 17, 17);">Give Up</button>
+        </div>
+        <div class="container" v-else>
+            <button @click="startGame" style="background-color: rgb(33, 24, 119);">START GAME</button>
+        </div>
+        <div id="log" class="container" v-if="gameRunning">
+            <h2>BATTLE LOG</h2>
+            <ul>
+
+                <li v-for="logMessage in logs">
+                    
+                    <span v-if="logMessage.status === 'heal'">
+                      
+                      <span class="log--heal">{{ logMessage.log }}</span>
+                    </span>
+                    <span v-if="logMessage.status === 'player'">
+                      
+                        <span class="log--player">{{ logMessage.log }}</span>
+                      </span>
+                      <span v-if="logMessage.status === 'monster'">
+                      
+                        <span class="log--monster">{{ logMessage.log }}</span>
+                      </span>
+                    <span v-if="logMessage.status==='special'">
+                      
+                      <span class="log--damage">{{ logMessage.log }}</span>
+                    </span>
+                    
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
